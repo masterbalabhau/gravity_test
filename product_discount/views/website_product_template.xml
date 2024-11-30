@@ -1,0 +1,38 @@
+<odoo>
+    <template id="product_discount_price" inherit_id="website_sale.product_price">
+        <xpath expr="//div[contains(@t-attf-class, 'product_price')]" position="replace">
+            <div itemprop="offers" itemscope="itemscope"  class="product_price mt-2 mb-3 d-inline-block ">
+                <h3 class="css_editable_mode_hidden">
+                    <t t-if='product.discount_percentage > 0'>
+                        <!-- Original Price (Strikethrough) -->
+                        <span class="oe_price text-danger ms-1 h5" 
+                              style="text-decoration: line-through; white-space: nowrap;">
+                            <span class="oe_currency_value">
+                                <t t-esc="product.list_price"/>
+                            </span>
+                        </span>
+                        <!-- Discounted Price -->
+                        <span class="oe_price" style="white-space: nowrap;">
+                            <span class="oe_currency_value">
+                                <t t-esc="product.discounted_price"/>
+                            </span>
+                        </span>
+                    </t>
+                    <t t-else="">
+                        <!-- Regular Price (No Discount) -->
+                        <span class="oe_price" style="white-space: nowrap;">
+                            <span class="oe_currency_value">
+                                <t t-esc="product.list_price"/>
+                            </span>
+                        </span>
+                    </t>
+                </h3>
+            </div>
+        </xpath>
+        <xpath expr="//div[@itemprop='offers']" position="attributes">
+            <attribute name="t-attf-class">
+                product_price mt-2 mb-3 d-inline-block
+            </attribute>
+        </xpath>
+    </template>
+</odoo>

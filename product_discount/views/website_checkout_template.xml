@@ -1,0 +1,28 @@
+<odoo>
+    <template id="checkout_layout_custom" inherit_id="website_sale.checkout_layout">
+        <!-- Modify the order summary section -->
+        <xpath expr="//td[@name='website_sale_cart_summary_line_price']" position="replace">
+            <td t-attf-class="#{o_cart_sum_padding_top} td-price pe-0 text-end"
+                name="website_sale_cart_summary_line_price">
+                <!-- Show discounted price if applicable -->
+                <t t-if="line.product_id.discount_percentage > 0">
+                    <!-- Original price with strikethrough -->
+                    <del t-attf-class="text-muted"
+                         t-out="line.product_id.list_price * line.product_uom_qty"
+                         t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"
+                         style="white-space: nowrap;"/>
+                    <!-- Discounted price -->
+                    <span t-out="line.product_id.discounted_price * line.product_uom_qty"
+                          style="white-space: nowrap; color: #ff0000;"
+                          t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                </t>
+                <!-- Regular price -->
+                <t t-else="">
+                    <span t-out="line.price_unit * line.product_uom_qty"
+                          style="white-space: nowrap;"
+                          t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                </t>
+            </td>
+        </xpath>
+    </template>
+</odoo>
